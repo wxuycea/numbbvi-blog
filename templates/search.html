@@ -1,1 +1,45 @@
-<!-- 검색 페이지 -->
+{% include 'base_code.html' %}
+<section>
+    {% if results %}
+    {% for post in results %}
+    {% if post.is_secret %}
+    <article style="margin: 10px 35px;">
+        <a class="post_list" href="{{ url_for('secret_pw', post_id=post.id) }}">
+            <span class="post_image">
+                <img src="/static/images/default.png" alt="게시글 이미지">
+            </span>
+            <div class="post_info">
+                <span class="post_title" style="color: #899779;">비밀글 입니다</span>
+            </div>
+        </a>
+    </article>
+    {% else %}
+    <article style="margin: 10px 35px;">
+        <a class="post_list" href="/post_show?post_id={{ post.id }}">
+            <span class="post_image">
+                {% if post.file_name %}
+                <img src="{{ url_for('static', filename='images/' + post.file_name) }}" alt="게시글 이미지">
+                {% else %}
+                <img style="background-color: #ffffff;">
+                {% endif %}
+            </span>
+            <div class="post_info">
+                <span class="post_title">{{ post.title[:30] }}{% if post.title|length > 30 %}...{% endif %}</span>
+                <span class="post_content">{{ post.content[:100] }}{% if post.content|length > 100 %}{% endif
+                    %}...</span>
+            </div>
+        </a>
+    </article>
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    <p style="color: #60704f;">검색 결과가 없습니다.</p>
+    {% endif %}
+</section>
+</main>
+<footer>
+    <p>numbbvi's blog</p>
+</footer>
+</body>
+
+</html>

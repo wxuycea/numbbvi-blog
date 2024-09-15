@@ -1,0 +1,29 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - /app/__pycache__
+      - ./static/images:/app/static/images
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://numbbvi:N!u3661#@numbbvi_db:3306/numbbvi
+    depends_on:
+      - numbbvi_db
+
+  numbbvi_db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: R!0ot#
+      MYSQL_DATABASE: numbbvi
+      MYSQL_USER: numbbvi
+      MYSQL_PASSWORD: N!u3661#
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:

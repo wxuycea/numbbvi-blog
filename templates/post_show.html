@@ -1,1 +1,32 @@
-<!-- 게시글 보여주는 페이지, 파일 다운로드 구현 -->
+{% include 'base_code.html' %}
+<section>
+    <article class="post_show">
+        <h2 id="title_show">{{ post.title }}</h2>
+        <p>작성자: <strong>{{ post.user_id }}</strong></p>
+        <p>작성일시: {{ post.post_time }}</p>
+        <div class="content_show">
+            <p>{{ post.content }}</p>
+            {% if post.file_name %}
+            <img src="{{ url_for('static', filename='images/' + post.file_name) }}" id="download_image" alt="게시글 이미지">
+            <a href="{{ url_for('static', filename='images/' + post.original_filename) }}" download>
+                <button id="download_button">파일 다운로드</button>
+            </a>
+            {% endif %}
+        </div>
+        <div class="file_download">
+
+        </div>
+        <div class="post_action">
+            <button type="submit" id="delete_button"
+                onclick="location.href='/post_delete?post_id={{ post.id }}'">삭제</button>
+            <button id="modify_button" onclick="location.href='/post_modify?post_id={{ post.id }}'">수정</button>
+        </div>
+    </article>
+</section>
+</main>
+<footer>
+    <p>numbbvi's blog</p>
+</footer>
+</body>
+
+</html>

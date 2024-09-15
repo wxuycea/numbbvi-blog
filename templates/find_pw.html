@@ -1,1 +1,31 @@
-<!-- 비밀번호 찾기 페이지, 이메일을 통해 임시 비밀번호 발급 -->
+{% include 'base_code.html' %}
+<section>
+    <article style="margin: 20px 35px;">
+        <form class="auth_form" action="/find_pw" method="POST">
+            <div>
+                <label for="name" class="form_label">이름</label>
+                <input type="text" class="form_input" id="name" name="name" placeholder="이름을 입력해주세요." required>
+            </div>
+            <div>
+                <label for="id" class="form_label">아이디</label>
+                <input type="text" class="form_input" id="id" name="id" placeholder="아이디를 입력해주세요." required>
+            </div>
+            <div>
+                <labedl for="school" class="form_label">학교</labedl>
+                <input type="text" class="form_input" id="school" name="school" placeholder="학교를 입력해주세요." required>
+            </div>
+            <div>
+                <label for="email" class="form_label">이메일</label>
+                <input type="email" class="form_input" id="email" name="email" placeholder="이메일을 입력해주세요." required>
+            </div>
+            <button id="auth_button" onclick="location.href='/new_pw'">비밀번호 찾기</button>
+        </form>
+    </article>
+</section>
+</main>
+<footer>
+    <p>numbbvi's blog</p>
+</footer>
+</body>
+
+</html>

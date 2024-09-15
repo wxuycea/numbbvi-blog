@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS numbbvi;
+
+USE numbbvi;
+
+CREATE TABLE IF NOT EXISTS user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(10) NOT NULL,
+    user_id VARCHAR(10) UNIQUE NOT NULL,
+    user_pw VARCHAR(255) NOT NULL,
+    school VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    profile_image VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS post (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    file_name VARCHAR(255),
+    is_secret BOOLEAN DEFAULT FALSE,
+    secret_pw VARCHAR(255),
+    user_id VARCHAR(10),
+    post_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);

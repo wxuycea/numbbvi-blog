@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>numbbvi's blog</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        window.onload = function () {
+            var messages = [];
+            {% with messages = get_flashed_messages(with_categories = true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            messages.push("{{ message }}");
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            if (messages.length > 0) {
+                messages.forEach(function (message) {
+                    alert(message);
+                });
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="nav_left">
+                <a href="/" id="numbbvi">numbbvi</a>
+            </div>
+            <div class="nav_center">
+                <form class="search_bar" action="/search" method="GET">
+                    <select id="search_category" name="search_category">
+                        <option value="title">제목</option>
+                        <option value="content">내용</option>
+                        <option value="all">제목+내용</option>
+                    </select>
+                    <input type="text" name="search" id="search" placeholder="검색어를 입력하세요">
+                    <button type="submit" id="search_button">
+                        <img src="/static/images/search_icon.png" id="search_icon">
+                    </button>
+                </form>
+            </div>
+            <div class="nav_right">
+                {% if session.get('user_id') %}
+                <a href="/logout" class="nav_user" style="margin-left: 25px;">로그아웃</a>
+                <a href="{{ url_for('user_show', user_id=user.id) }}" class="nav_user">{{ session['user_name'] }} 님</a>
+                {% else %}
+                <a href="/register" class="nav_user" style="margin-left: 25px;">회원가입</a>
+                <a href="/login" class="nav_user">로그인</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main>
+        <aside>
+            {% if not session.get('user_id') %}
+            <div class="profile">
+                <img src="#" style="background-color: #f0f0f0;">
+            </div>
+            <div class="profile_info">
+                <p>로그인 후 이용해주세요.</p>
+            </div>
+            <div class="user_list_button">
+                <button type="button" id="write_post_button" onclick="window.location.href='/user_list'">회원 목록</button>
+            </div>
+            {% else %}
+            <aside>
+                <div class="profile">
+                    <img src="{{ url_for('static', filename='images/' + session['profile_image']) }}">
+                </div>
+                <div class="profile_info">
+                    <p>이름: {{ user['name'] }}</p>
+                    <p>학교: {{ user['school'] }}</p>
+                    <p>이메일: {{ user['email'] }}</p>
+                </div>
+                <div class="profile_button">
+                    <button type="button" id="profile_modify_button" onclick="window.location.href='/my_page'">
+                        내 정보 수정
+                    </button>
+                    <button type="button" id="write_post_button" onclick="window.location.href='/post_create'">글
+                        쓰기</button>
+                </div>
+                <div class="user_list_button">
+                    <button type="button" id="write_post_button" onclick="window.location.href='/user_list'">회원
+                        목록</button>
+                </div>
+            </aside>
+            {% endif %}
+        </aside>

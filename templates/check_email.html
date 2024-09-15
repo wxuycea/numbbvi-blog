@@ -1,0 +1,21 @@
+{% include 'base_code.html' %}
+<section>
+    <article style="margin: 20px 35px;">
+        {% if session.get('name') and session.get('id') and session.get('pw') and session.get('school') and
+        session.get('email') %}
+        <form class="auth_form" action="/check_email" method="post">
+            <p id="check_info">이메일로 전송된 인증 코드를 입력해주세요.</p>
+            <label for="email_code" class="form_label">인증 코드</label>
+            <input type="text" class="form_input" id="email_code" name="email_code" required><br>
+            <button type="submit" id="auth_button">인증하기</button>
+        </form>
+        {% endif %}
+    </article>
+</section>
+</main>
+<footer>
+    <p>numbbvi's blog</p>
+</footer>
+</body>
+
+</html>
